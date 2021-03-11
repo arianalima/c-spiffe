@@ -1,11 +1,20 @@
 #!/usr/bin/env python
 
-import ctypes
+from ctypes import *
 
 def check_so(soname):
     try:
-        lib = ctypes.cdll.LoadLibrary(soname)
+        lib = CDLL(soname)
         print("INFO: Found so as", lib)
+        error=0
+        #client = lib.workloadapi_NewClient(error)
+        print('a')
+        #lib.workloadapi_Client_defaultOptions(client, None)
+        print('b')
+        #error = lib.workloadapi_Client_Connect(client)
+        print('c')
+        #print(lib.workloadapi_Client_FetchX509SVID(client, error))
+        print('d')
         return True
     except OSError as ex:
         print("WARNING:", ex)
@@ -13,12 +22,8 @@ def check_so(soname):
 
 
 if __name__ == "__main__":
-    # "./liblibbundle.so"
-    # "./liblibinternal.so"
-    # "./liblibspiffeid.so"
-    # "./liblibsvid.so")
     
-    j = check_so("./liblibrequestor.so")
+    j = check_so("./libsource1.so")
     if not j:
         print("Error: Could not test")
     else:
