@@ -7,13 +7,14 @@ def check_so(soname):
         lib = CDLL(soname)
         print("INFO: Found so as", lib)
         error=0
-        #client = lib.workloadapi_NewClient(error)
+        dummy_string = create_string_buffer(str.encode("original_string"))
+        # client = lib.workloadapi_NewClient(error)
         print('a')
-        #lib.workloadapi_Client_defaultOptions(client, None)
+        # lib.workloadapi_Client_defaultOptions("client", None)
         print('b')
-        #error = lib.workloadapi_Client_Connect(client)
-        print('c')
-        #print(lib.workloadapi_Client_FetchX509SVID(client, error))
+        error = lib.workloadapi_Client_Connect(dummy_string)
+        print('c', error)
+        print(lib.workloadapi_Client_defaultOptions(dummy_string))
         print('d')
         return True
     except OSError as ex:
@@ -23,7 +24,7 @@ def check_so(soname):
 
 if __name__ == "__main__":
     
-    j = check_so("./libsource1.so")
+    j = check_so("/mnt/build/workload/libsource.so")
     if not j:
         print("Error: Could not test")
     else:
